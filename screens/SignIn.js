@@ -1,7 +1,7 @@
 import 'react-native-gesture-handler'
 
 import React, { Component, useState } from 'react';
-import {createStackNavigator} from '@react-navigation/native'
+
 import {
   SafeAreaView,
   StyleSheet,
@@ -19,7 +19,9 @@ import {
   TouchableOpacity
 } from 'react-native';
 
-export default function SignIn() {
+import ForgotPassword from './ForgotPassword'
+
+export default function SignIn({ navigation }) {
     const [username,setUsername] = useState('');
     const [password,setPassword] = useState('');
 
@@ -29,7 +31,7 @@ export default function SignIn() {
     }
 
     const forgotPress = () => {
-        Alert.alert('Pressed!');
+        navigation.navigate('Forgot Password')
     }
 
     return(
@@ -78,6 +80,7 @@ export default function SignIn() {
 const styles = StyleSheet.create({
     container:{
       flex: 0.8,
+      backgroundColor: '#fff',
       margin: 20,
       height: '100%',
       position: 'relative',
