@@ -31,7 +31,7 @@ export default function SignIn({ navigation }) {
     }
 
     const forgotPress = () => {
-        navigation.navigate('Forgot Password')
+        navigation.navigate('Forgot Password', { username: username })
     }
 
     return(
