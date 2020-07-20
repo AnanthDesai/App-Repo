@@ -43,7 +43,6 @@ export default function SignIn({ navigation }) {
             LOGIN
           </Text>
           
-          <Text>Enter Username: </Text>
           <TextInput 
             style={styles.input} 
             placeholder='Username' 
@@ -51,7 +50,6 @@ export default function SignIn({ navigation }) {
             value={username}
             onChangeText={(username) => setUsername(username) } />
           
-          <Text>Enter Password: </Text>
           <TextInput 
             style={styles.input}
             secureTextEntry={true} 
@@ -103,9 +101,10 @@ const styles = StyleSheet.create({
       textAlign: 'center',
       borderColor: '#000000',
       borderWidth: 1,
-      alignSelf: 'stretch',
       marginLeft: 20,
       marginRight: 20,
+      borderRadius: 25
+      
     },
     footer: {
       flexDirection: 'column',
@@ -120,6 +119,8 @@ const styles = StyleSheet.create({
     },
     signin: {
         margin: 15, 
+        borderRadius: 25,
+        padding: 15
     },
 
     test: {

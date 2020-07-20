@@ -22,7 +22,7 @@ export default class Main extends Component{
     render(){ 
         return(  
            <NavigationContainer>
-                <StartUpStack.Navigator>
+                <StartUpStack.Navigator headerMode='none'>
                     <StartUpStack.Screen name="Sign In" component={SignIn} />
                     <StartUpStack.Screen name="Forgot Password" component={ForgotPassword}/>
                 </StartUpStack.Navigator>
