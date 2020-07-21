@@ -1,23 +1,22 @@
 import React, {  useState, useEffect } from 'react'
 import { Text, View, ActivityIndicator } from 'react-native'
+import { FlatList } from 'react-native-gesture-handler';
 
 export default function ForgotPassword() {
     
     const [isLoading,setLoading] = useState(true);
-    const [source,setSource] = useState(null);
+    const [source,setSource] = useState([]);
 
     useEffect(() => {
-            fetch('https://facebook.github.io/react-native/movies.json')
+            fetch('https://reactnative.dev/movies.json')
                 .then((response) => response.json())
-                .then((responseJson) =>{
-                    setLoading(false);
-                    setSource(responseJson.movies);
-                    console.log("Loaded Link");
-                })
+                .then((json) => setSource(json.movies))
+                .then(console.log("Loaded Link"))
                 .catch((error) => {
                     console.log(error);
                 })
-        });
+                .finally(() => setLoading(false))
+        },[]);
 
     if(isLoading){
         return(
@@ -30,14 +29,16 @@ export default function ForgotPassword() {
     }
     else{
 
-        let details = source.map((val, key) => {
-            return <View key={key}> <Text>{val.title}</Text></View>    
-            
-        })
-
+    
         return(
             <View>
-                <Text> {details} </Text>
+                <FlatList 
+                data={source}
+                key={({id}, index) => id}
+                renderItem={({item}) => 
+                    <Text>{item.title}</Text>
+            }
+                />
             </View>
         );
     }
