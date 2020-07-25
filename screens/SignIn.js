@@ -25,9 +25,28 @@ export default function SignIn({ navigation }) {
     const [username,setUsername] = useState('');
     const [password,setPassword] = useState('');
 
+    const credentials = {
+      username: username,
+      password: password
+    }
+
+    
+
     const pressHandler = () => {
-        Alert.alert('Username '+ username);
-        setUsername('');
+      const options = {
+        method: "post",
+        headers: {
+          "Accept": "application/json",
+          'Content-Type': "application/json"
+        },
+        body: JSON.stringify(credentials),
+      }
+      //  Alert.alert('Username '+ username);
+        fetch('http://192.168.1.12:3000/', options)
+        .then((response) => response.json())
+        .then((res) => console.log(res.status))
+        .then(console.log('sent'))
+        .catch((err) => console.log(err))
     }
 
     const forgotPress = () => {
