@@ -1,6 +1,6 @@
 import 'react-native-gesture-handler'
 
-import React, { Component, useState } from 'react';
+import React, { Component, useState, useRef } from 'react';
 
 import {
   SafeAreaView,
@@ -20,6 +20,7 @@ import {
 } from 'react-native';
 
 import ForgotPassword from './ForgotPassword'
+import { createStackNavigator } from '@react-navigation/stack';
 
 export default function SignIn({ navigation }) {
     const [username,setUsername] = useState('');
@@ -33,25 +34,39 @@ export default function SignIn({ navigation }) {
     
 
     const pressHandler = () => {
-      const options = {
+      if(credentials.username === '' || credentials.password === ''){
+        if(credentials.username === ''){
+          usernameInput.current.focus();
+          Alert.alert('Field cannot be empty!', 'Username cannot be empty!');
+        }
+        else{
+          passwordInput.current.focus();
+          Alert.alert('Field cannot be empty!', 'Password cannot be empty!');
+        }
+      }
+      else{
+        const options = {
         method: "post",
         headers: {
           "Accept": "application/json",
           'Content-Type': "application/json"
         },
         body: JSON.stringify(credentials),
-      }
-      //  Alert.alert('Username '+ username);
+        }
         fetch('http://192.168.1.12:3000/', options)
         .then((response) => response.json())
         .then((res) => console.log(res.status))
         .then(console.log('sent'))
         .catch((err) => console.log(err))
     }
+  }
 
     const forgotPress = () => {
         navigation.navigate('Forgot Password', { username: username })
     }
+
+    const passwordInput = useRef();
+    const usernameInput = useRef();
 
     return(
         <View style={styles.container}>
@@ -67,9 +82,14 @@ export default function SignIn({ navigation }) {
             placeholder='Username' 
             defaultValue='' 
             value={username}
-            onChangeText={(username) => setUsername(username) } />
+            ref={usernameInput}
+            maxLength={11}
+            onSubmitEditing={() => passwordInput.current.focus()}
+            onChangeText={(username) => setUsername(username) } 
+            blurOnSubmit={false}/>
           
           <TextInput 
+            ref={passwordInput}
             style={styles.input}
             secureTextEntry={true} 
             defaultValue=''
